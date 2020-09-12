@@ -10,8 +10,8 @@ namespace EFC.Domain
         public int Id { get; set; }
         public int ClienteId { get; set; }
         public Cliente Cliente { get; set; }
-        public DateTime IniciadoEm { get; set; }
-        public DateTime FinalizadoEm { get; set; }
+        public string IniciadoEm { get; set; }
+        public string FinalizadoEm { get; set; }
         public TipoFrete TipoFrete { get; set; }
         public StatusPedido Status { get; set; }
         public string Observacao { get; set; }
