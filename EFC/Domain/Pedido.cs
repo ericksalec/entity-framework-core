@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EFC.Domain
 {
-    class Pedido
+    public class Pedido
     {
         public int Id { get; set; }
         public int ClienteId { get; set; }
