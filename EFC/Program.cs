@@ -25,7 +25,33 @@ namespace EFC
             //InserirDadosEmMassa();
             //ConsultarDados();
             //CadastrarPeido();
-            ConsultarPedidoCarregamentoAdiantado();
+            //ConsultarPedidoCarregamentoAdiantado();
+            AtualizarDados();
+        }
+
+        private static void AtualizarDados()
+        {
+            using var db = new Data.ApplicationContext();
+            //var cliente = db.Clientes.Find(1);
+
+            var cliente = new Cliente
+            {
+                Id = 1,
+            };
+
+            var clienteDesconectado = new
+            {
+                Nome = "Cliente Desconectado",
+                Telefone = "317777777"
+            };
+
+            db.Attach(cliente);
+            db.Entry(cliente).CurrentValues.SetValues(clienteDesconectado);
+
+            //atualiza todos os dados idempendente se sofreram alteração
+            //db.Clientes.Update(cliente);
+
+            db.SaveChanges();
         }
 
         private static void ConsultarPedidoCarregamentoAdiantado()
