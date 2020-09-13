@@ -26,7 +26,21 @@ namespace EFC
             //ConsultarDados();
             //CadastrarPeido();
             //ConsultarPedidoCarregamentoAdiantado();
-            AtualizarDados();
+            //AtualizarDados();
+            RemoverRegistro();
+        }
+
+        private static void RemoverRegistro()
+        {
+            using var db = new Data.ApplicationContext();
+            //var cliente = db.Clientes.Find(2);
+            var cliente = new Cliente { Id = 3 }; //forma desconectada, somente uma interação com o BD (não realiza a busca)
+
+            //db.Clientes.Remove(cliente);
+            //db.Entry(cliente).State = EntityState.Deleted;
+            db.Remove(cliente);
+
+            db.SaveChanges();
         }
 
         private static void AtualizarDados()
