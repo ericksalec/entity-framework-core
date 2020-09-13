@@ -21,13 +21,15 @@ namespace EFC
             //verificar se esxistem migrações pendentes na base de dados
             //var existe = db.Database.GetPendingMigrations().Any();
 
+            //CRUD com EFC
+
             //InserirDados();
             //InserirDadosEmMassa();
             //ConsultarDados();
             //CadastrarPeido();
             //ConsultarPedidoCarregamentoAdiantado();
             //AtualizarDados();
-            RemoverRegistro();
+            //RemoverRegistro();
         }
 
         private static void RemoverRegistro()
