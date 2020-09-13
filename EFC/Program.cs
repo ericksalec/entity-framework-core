@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace EFC
 {
@@ -19,8 +20,25 @@ namespace EFC
             //var existe = db.Database.GetPendingMigrations().Any();
 
             //InserirDados();
-            InserirDadosEmMassa();
+            //InserirDadosEmMassa();
+            ConsultarDados();
+        }
 
+        private static void ConsultarDados()
+        {
+            using var db = new Data.ApplicationContext();
+            //var consultarPorSintaxe = (from c in db.Clientes where c.Id > 0 select c).ToList();
+            var consultaPorMetodo = db.Clientes
+                .Where(p => p.Id > 0).ToList()
+                .OrderBy(p => p.Id)
+                .ToList();
+
+            foreach(var cliente in consultaPorMetodo)
+            {
+                Console.WriteLine($"Consultando Clientes: {cliente.Id}");
+                //db.Clientes.Find(cliente.Id);
+                db.Clientes.FirstOrDefault(p => p.Id == cliente.Id);
+            }
         }
 
         private static void InserirDadosEmMassa()
