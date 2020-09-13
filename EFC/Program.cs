@@ -1,7 +1,9 @@
 ﻿using EFC.Domain;
+using EFC.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -21,7 +23,53 @@ namespace EFC
 
             //InserirDados();
             //InserirDadosEmMassa();
-            ConsultarDados();
+            //ConsultarDados();
+            //CadastrarPeido();
+            ConsultarPedidoCarregamentoAdiantado();
+        }
+
+        private static void ConsultarPedidoCarregamentoAdiantado()
+        {
+            using var db = new Data.ApplicationContext();
+            var pedidos = db
+                .Pedidos
+                .Include(p => p.Itens)//inclui o carregamento dos itens
+                .ThenInclude(p => p.Produto)//inclui o carregamento dos produtos presentes no item 
+                .ToList();
+
+            Console.WriteLine(pedidos.Count);
+        }
+
+        private static void CadastrarPeido()
+        {
+            using var db = new Data.ApplicationContext();
+
+            var cliente = db.Clientes.FirstOrDefault();
+            var produto = db.Produtos.FirstOrDefault();
+
+            var pedido = new Pedido
+            {
+                ClienteId = cliente.Id,
+                IniciadoEm = DateTime.Now.ToString(),
+                FinalizadoEm = DateTime.Now.ToString(),
+                Observacao = "Pedido Teste",
+                Status = StatusPedido.Analise,
+                TipoFrete = TipoFrete.SemFrete,
+                Itens = new List<PedidoItem>
+                {
+                    new PedidoItem
+                    {
+                        ProdutoId = produto.Id,
+                        Desconto = 0,
+                        Quantidade = 1,
+                        Valor = 10,
+                    }
+                }
+            };
+
+            db.Pedidos.Add(pedido);
+            db.SaveChanges();
+
         }
 
         private static void ConsultarDados()
@@ -33,7 +81,7 @@ namespace EFC
                 .OrderBy(p => p.Id)
                 .ToList();
 
-            foreach(var cliente in consultaPorMetodo)
+            foreach (var cliente in consultaPorMetodo)
             {
                 Console.WriteLine($"Consultando Clientes: {cliente.Id}");
                 //db.Clientes.Find(cliente.Id);
