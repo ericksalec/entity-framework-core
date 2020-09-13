@@ -12,7 +12,7 @@ namespace EFC.Data
         public DbSet<Pedido> Pedidos { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-T8KD2BL; Initial Catalog=efc; Integrated Security=SSPI;");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-T8KD2BL;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
