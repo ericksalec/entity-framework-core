@@ -4,15 +4,23 @@ using System.Text;
 using EFC.Data.Configurations;
 using EFC.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace EFC.Data
 {
     public class ApplicationContext : DbContext
     {
+        private static readonly ILoggerFactory _logger = LoggerFactory.Create(p => p.AddConsole());
         public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<Produto> Produto { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-T8KD2BL;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder
+                .UseLoggerFactory(_logger)
+                .EnableSensitiveDataLogging()
+                .UseSqlServer("Data Source=DESKTOP-T8KD2BL;Initial Catalog=efc;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
